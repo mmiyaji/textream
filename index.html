@@ -6,11 +6,11 @@
   <script type="text/javascript"
     src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
   <!-- Socket.IOのJSファイルをインポートする -->
-  <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+  <script src="http://chat.ruhenheim.org:8080/socket.io/socket.io.js"></script>
   <script type="text/javascript">
 
   // Socket.IO Serverに接続する
-  var socket = io.connect("http://localhost:8080");
+  var socket = io.connect("http://chat.ruhenheim.org:8080");
 
   // 接続時のイベント
   socket.on("connect", function () {
