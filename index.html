@@ -4,80 +4,32 @@
   <meta charset="UTF-8">
   <title>Chatroom</title>
   <script type="text/javascript"
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-  <!-- Socket.IOのJSファイルをインポートする -->
-  <script src="http://chat.ruhenheim.org:8080/socket.io/socket.io.js"></script>
-  <script type="text/javascript">
-
-  // Socket.IO Serverに接続する
-  var socket = io.connect("http://chat.ruhenheim.org:8080");
-
-  // 接続時のイベント
-  socket.on("connect", function () {
-              console.log("client: connect");
-  });
-
-  // サーバーからメッセージを受け取った時のイベント
-  socket.on("message", function (message) {
-    // 画面にメッセージを表示する
-    appendMessage(message.value);
-  });
-
-  // サーバーから誰かが接続解除したメッセージを受け取った時のイベント
-  socket.on("disconnect", function (client) {
-    console.log(client.sessionId + " disconnected.");
-  });
-
-  // サーバーにメッセージを送信する機能
-  function sendMessage () {
-
-    var msg = $("input#message").val();
-    $("input#message").val("");
-    if (msg.length > 0) {
-      // サーバーにメッセージを送る
-      // 第２引数でサーバーへ内容を送ることができる
-      socket.emit("message", {value:msg})
-    }
-  }
-
-
-  // 挨拶を送る機能
-  // カスタムイベント"say hello"を利用している。
-  function sayHello () {
-    var userName = $("#text_userName").val();
-    if (userName.length > 0)
-      socket.emit("say hello", {userName:userName});
-    }
-
-
-  // divAreaにメッセージを表示する
-  function appendMessage (message) {
-    $("div#chat-box").append("<div class='msg'>" + message + "</div>");
-  }
-  </script>
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        function send() {
+            var msg = $("input#msg").val();
+            $("input#msg").val("");
+            if (msg.length > 0) {
+                 ws.send(msg);
+            }
+        }
+        var host = window.document.location.host.replace(/:.*/, "");
+        var ws = new WebSocket("ws://" + host + ":8080");
+        ws.onmessage = function (event) {
+            document.getElementById("messages").innerHTML += "<div>" + JSON.parse(event.data) + "</div>";
+            console.log(JSON.parse(event.data));
+        };
+    </script>
 </head>
 <body>
+<strong>ws chat</strong><br>
+<form action="" method="post" onsubmit="return false;">
+<input type="text" id="msg"/>
+<input type="submit" class="button" value="send" onclick="send()"/>
+ </form>
 
-  <!-- Sending Message Function -->
-  <form action="" method="post" onsubmit="return false;">
-    <input type="text" name="message"
-      id="message" value="" style="width:200px;"/>
-    <input type="submit" class="button" name="send"
-      id="send" value="Send" onclick="sendMessage();"/>
-  </form>
-
-  <!-- Greeting Function -->
-  <form action="" method="post" onsubmit="return false;">
-    <input type="text" name="userName" id="text_userName"
-       value="" placeholder="please put your name." style="width:200px;"/>
-    <input type="submit" class="button" name="hello"
-       id="greeting" value="Greeting" onclick="sayHello();"/>
-  </form>
-  <br>
-
-  <!-- the Area of showing message from other users. -->
-  <div id="chat-box"></div>
-
-</div>
+<br>
+<hr>
+<div id="messages"/>
 </body>
 </html>
