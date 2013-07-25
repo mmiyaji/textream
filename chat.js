@@ -22,11 +22,15 @@ wss.on('connection', function (ws) {
     });
     //メッセージ送信時
     ws.on('message', function (message) {
-        console.log('message:', message);
-        broadcast(JSON.stringify(message));
+        log('message:' + JSON.stringify(message));
+        setTimeout(function() {
+             broadcast(JSON.stringify(message));
+        }, 50);
     });
 });
-
+function log (str) {
+    console.log((new Date).toString() + ' "' + str + '"');
+}
 //ブロードキャストを行う
 function broadcast(message) {
     connections.forEach(function (con, i) {

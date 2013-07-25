@@ -73,7 +73,7 @@
       <script src="./js/html5shiv.js"></script>
     <![endif]-->
   <script type="text/javascript"
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    src="./js/jquery-1.9.1.min.js"></script>
     <script>
         function send() {
             var msg = $("input#msg").val();
@@ -81,12 +81,12 @@
             if (msg.length > 0) {
                  ws.send(msg);
             }
-        }
+        };
         var host = window.document.location.host.replace(/:.*/, "");
         var ws = new WebSocket("ws://" + host + ":8080");
         ws.onmessage = function (event) {
             $("div#messages").prepend("<p class='msg'>" + JSON.parse(event.data) + "</p>");
-            console.log(JSON.parse(event.data));
+            console.log(JSON.parse(event.data));console.log(event);
         };
     </script>
 
@@ -114,7 +114,7 @@
         </p>
         <form action="" method="post" onsubmit="return false;">
           <div class="input-append">
-            <input type="text" id="msg"/>
+            <input type="text" id="msg" tabindex="1" />
             <input class="btn" type="submit" class="button" value="send" onclick="send()"/>
           </div>
         </form>
