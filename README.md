@@ -4,5 +4,5 @@ textream
 install
 -----
 
-% npm install ws express
-% node chat.js
+    % npm install ws express
+    % node chat.js
