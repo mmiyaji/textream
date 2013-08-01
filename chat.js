@@ -1,7 +1,7 @@
 var WebSocketServer = require('ws').Server
-    , http = require('http')
-    , express = require('express')
-    , app = express();
+, http = require('http')
+, express = require('express')
+, app = express();
 
 app.use(express.static(__dirname + '/'));
 var server = http.createServer(app);
@@ -24,7 +24,7 @@ wss.on('connection', function (ws) {
     ws.on('message', function (message) {
         log('message:' + JSON.stringify(message));
         setTimeout(function() {
-             broadcast(JSON.stringify(message));
+            broadcast(JSON.stringify(message));
         }, 50);
     });
 });
@@ -46,20 +46,25 @@ var server2 = express2();
 server2.set('view options', { layout: false });
 //getでリクエストがきたときの処理
 server2.get('/', function(req, res){
-  console.log(req.query); // for logging
-  var user = "";
-  var comment = "";
-  // NAMEパラメタが空でなければ画面に表示
-  if (req.query.user && req.query.comment) {
-      user = req.query.user;
-      comment = req.query.comment;
-      connections.forEach(function (con, i) {
-          con.send(comment+"("+user+")");
-      });
-      addComment(user, comment);
-      // getComments();
-  }
-  res.render('get.ejs', { "user": user, "comment": comment, "comments":getComments() });
+    console.log(req.query); // for logging
+    var user = "";
+    var comment = "";
+    // NAMEパラメタが空でなければ画面に表示
+    if (req.query.user && req.query.comment) {
+        user = req.query.user;
+        comment = req.query.comment;
+        broadcast(comment + "("+user +")");
+        addComment(user, comment);
+        // getComments();
+    }
+    db.all("SELECT rowid AS id, user, comment FROM comments ORDER BY id DESC LIMIT 10", function (err, row) {
+        if (err) {
+            console.log(err);
+        }
+        res.render('get.ejs', {
+            locals:{ "user": user, "comment": comment, "comments": row}
+        });
+    });
 });
 server2.listen(3000);
 
@@ -68,17 +73,17 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('db.sqlite3');
 // db.run("CREATE TABLE comments (user TEXT, comment TEXT)");
 function addComment(user,comment){
-    console.log("insert");
-    var date = new Date();
     db.run("INSERT INTO comments (user, comment) VALUES (?, ?)", user, comment);
 }
-
-function getComments(){
-    var comments = new Array("TEXT")
-    db.each("SELECT rowid AS id, user, comment FROM comments ORDER BY id DESC LIMIT 10", function (err, row) {
-        console.log(row.id + " : " + row.user + " / " + row.comment);
-        comments.push(row.id + " : " + row.user + " / " + row.comment);
-    });
-    console.log(comments);
-    return comments;
-}
+// function getComments(){
+//     db.all("SELECT rowid AS id, user, comment FROM comments ORDER BY id DESC LIMIT 10", function (err, row) {
+//         if (!err) {
+//             console.log(row);
+//             return row;
+//         }
+//         else{
+//             console.log(err);
+//             return null;
+//         }
+//     });
+// }

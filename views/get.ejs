@@ -8,6 +8,12 @@
       comment:<input type="text" name="comment" id="name" />
       <input type="submit" />
     </form>
-    text <%= comments %>
+    <% if (comments) { %>
+    <ul>
+      <% comments.forEach(function(list){ %>
+      <li><%= list.user %> : <%= list.comment %></li>
+      <% }) %>
+    </ul>
+    <% } %>
   </body>
 </html>
