@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
  　<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>しぶ＆れいな 2次会でtweet</title>
+    <title>しぶ＆れいな 2次会でtweet:list</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/css/bootstrap-resposive.min.css" rel="stylesheet" media="screen">
@@ -11,21 +11,6 @@
   <body>
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <div class="row-fluid">
-      <form class="" method="GET" action="/">
-          <div class="">
-              <% if (user=="") { %>名前　　　<input type="text" name="user" id="user" value="<%= user %>" class="span" maxlength="15"/><%} else {%><%= user %>　<span size="8px">(<a href="/">名前を変更する</a>)</span>
-              <input type="hidden" name="user" id="user" value="<%= user %>">
-              <% } %>
-          </div>
-          <div class="">
-              コメント　<input type="text" name="comment" id="name" class="span" maxlength="30"/>
-              <input type="hidden" name="precomment" value="<%= comment %>">
-          </div>
-          <% if (repetitionFlg==true) { %><div>※二重送信はできません</div><% } %>
-          <button type="submit" class="btn btn-primary" size="100%">&nbsp;&nbsp;&nbsp;つぶやく<i class="icon-white icon-volume-up"></i>&nbsp;&nbsp;&nbsp;</button>
-      </form>
-    </div>
     <% if (comments) { %>
     <div class="row-fluid">
     <div class="span">
