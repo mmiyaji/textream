@@ -111,6 +111,17 @@ app2.get('/sum', function(req, res){
         });
     });
 });
+app2.get('/rank', function(req, res){
+    db.all("select user,count(*) as cnt from comments group by user order by cnt DESC", 
+     function (err, row) {
+        if (err) {
+            console.log(err);
+        }
+        res.render('rank.ejs', {
+            locals:{"results": row}
+        });
+    });
+});
 app2.listen(3000);
 
 // SQLITE 3

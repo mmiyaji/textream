@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+ 　<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>しぶ＆れいな 2次会でtweet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://chat.ruhenheim.org/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="http://chat.ruhenheim.org/css/bootstrap-resposive.min.css" rel="stylesheet" media="screen">
+  </head>
+<html>
+  <body>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <form method="GET" action="/">
+      user:<input type="text" name="user" id="user" value="<%= user %>" />
+      comment:<input type="text" name="comment" id="name" />
+      <input type="submit" />
+    </form>
+    <% if (comments) { %>
+    <ul>
+      <% comments.forEach(function(list){ %>
+      <li>
+       <%= list.comment %>:[<%= list.user %> <%= list.CREATE_HMS.substr(0,2)+":"+list.CREATE_HMS.substr(2,2)+":"+list.CREATE_HMS.substr(4,2) %>]
+      </li>
+      <% }) %>
+    </ul>
+    <% } %>
+    <% if (comments) { %>
+    <div class="row-fluid">
+    <div class="span4">
+      <table class="table table-striped table-condensed">
+        <tbody>
+          <% comments.forEach(function(list){ %>
+          <tr>
+            <td><%= list.comment %></td>
+              <td><%= list.user %> <%= list.CREATE_HMS.substr(0,2)+":"+list.CREATE_HMS.substr(2,2)+":"+list.CREATE_HMS.substr(4,2) %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    </div>
+    <% } %>
+  </body>
+</html>

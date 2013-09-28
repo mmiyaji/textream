@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+ 　<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>しぶ＆れいな 2次会でtweet:集計</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/css/bootstrap-resposive.min.css" rel="stylesheet" media="screen">
+    <style>
+div.rank_info_wrap {float:right;}
+div.rank_img {width:150px;text-align:center;}
+div.rank_img img {display:block;margin:auto;}
+div.rank-1 {float:none;}
+div.rank-2 {float:none;}
+div.rank-3 {float:none;}
+span.user {width: 200px;}
+span.count {margin-left: 30px;}
+span.user_postfix {margin-left: 10px;}
+span.count_postfix {margin-left: 10px;}
+.rank-1 div.rank_info {width:850px;height:100px;text-align:left;vertical-align:middle;display:table-cell;}
+.rank-1 div.rank_img {height:100px;}
+.rank-1 span.user {font-size:60px;}
+.rank-1 span.count {font-size:60px;}
+.rank-2 div.rank_info {width:850px;height:60px;text-align:left;vertical-align:middle;display:table-cell;}
+.rank-2 div.rank_img {height:60px;}
+.rank-2 span.user {font-size:40px;}
+.rank-2 span.count {font-size:40px;}
+.rank-3 div.rank_info {width:850px;height:40px;text-align:left;vertical-align:middle;display:table-cell;}
+.rank-3 div.rank_img {height:40px;}
+.rank-3 span.user {font-size:30px;}
+.rank-3 span.count {font-size:30px;}
+.rank-4 div.rank_info {width:850px;height:20px;text-align:left;vertical-align:middle;display:table-cell;}
+.rank-4 div.rank_img {height:20px;}
+.rank-4 span.user {font-size:20px;}
+.rank-4 span.count {font-size:20px;}
+    </style>
+  </head>
+<html>
+  <body>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    function showRank(id){
+      document.getElementById(id).style.color="#000000";
+    } 
+    </script>
+    <% if (results) { %>
+    <div class="span" style="width:1000px">
+      <% for(var i=0; i<results.length; i++) { %>
+        <% if(i==0){%>
+          <div class="rank-1">
+            <div class="rank_info_wrap">
+              <div class="rank_info">
+                <span class="user" id="rank<%=i+1%>" style="color:#ffffff;"><%= results[i].user %></span><span class="user_postfix">さん</span>
+                <span class="count"><%= results[i].cnt %></span><span class="count_postfix">tweet</span>
+              </div>
+            </div>
+            <div class="rank_img">
+          	 <img src="img/icon-rank/big/icon-rank-tk02_b0<%= i+1 %>.png" onclick="showRank('rank<%=i+1%>')"/>
+            </div>
+          </div>
+        <%} else if(i<=4){%>
+          <div class="rank-2">
+            <div class="rank_info_wrap">
+              <div class="rank_info">
+                <span class="user" id="rank<%=i+1%>" style="color:#ffffff;"><%= results[i].user %></span><span class="user_postfix">さん</span>
+                <span class="count"><%= results[i].cnt %></span><span class="count_postfix">tweet</span>
+              </div>
+            </div>
+            <div class="rank_img">
+             <img src="img/icon-rank/middle/icon-rank-tk02_m<%= i+1 %>.png" onclick="showRank('rank<%=i+1%>')"/>
+            </div>
+          </div> 
+        <%} else if(i<=9){%>
+          <div class="rank-3">
+            <div class="rank_info_wrap">
+              <div class="rank_info">
+                <span class="user"><%= results[i].user %></span><span class="user_postfix">さん</span>
+                <span class="count"><%= results[i].cnt %></span><span class="count_postfix">tweet</span>
+              </div>
+            </div>
+            <div class="rank_img">
+             <img src="img/icon-rank/small/icon-rank-tk02_s<%= i+1 %>.png"/>
+            </div>
+          </div> 
+        <%} else{%>
+          <div class="rank-4">
+            <div class="rank_info_wrap">
+              <div class="rank_info">
+                <span class="user"><%= results[i].user %></span><span class="user_postfix">さん</span>
+                <span class="count"><%= results[i].cnt %></span><span class="count_postfix">tweet</span>
+              </div>
+            </div>
+            <div class="rank_img">
+             <%= i+1 %>
+            </div>
+          </div> 
+        <%}%>
+      <%}%>
+    </div>
+    <% } %>
+  </body>
+</html>
